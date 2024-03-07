@@ -76,13 +76,6 @@ with open("data.txt", "r") as file:
 
 
 
-
-
-
-
-
-
-
 print(num_lines)
 print(my_array)
 

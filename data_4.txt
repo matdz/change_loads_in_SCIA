@@ -1,0 +1,5 @@
+BG7;X;527300;Replacement
+BG7;Y;-7190;Replacement
+BG7;Z;1371660;Replacement
+BG7;Mx;156490;Replacement
+BG7;My;2790910;Replacement
