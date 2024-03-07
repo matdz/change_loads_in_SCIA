@@ -45,6 +45,7 @@ with open('data_3.txt', 'r') as file:
     # Read all lines into a list
     lines = file.readlines()
 
+"""
 line_number = 0
 for line in lines:
     if "\""+node_scia+"\"" in line:
@@ -64,7 +65,7 @@ for line in lines:
                     else:
                         print("No value found in the given text.")
     line_number += 1
-
+"""
 
 # Find the content of line number 10
 line_number_10 = lines[9].strip()  # Indexing starts from 0, so line number 10 corresponds to index 9
@@ -125,16 +126,28 @@ def replace_text(input_array):
         lines = file.readlines()
         line_number = 0
         for line in lines:
-            if "\"" + node_scia + "\"" in line:
-                if "Force" in lines[line_number + 4].strip():
+            if "\"" + node_scia + "\"" in line:   # Find the node
+                if "\"" + input_array[3] + "\"" in lines[line_number + 4].strip() and "\"" + input_array[3] + "\"" == "\"Force\"": # Force or Moment
                     if "\"" + input_array[0] + "\"" in lines[line_number - 10].strip():  # for example BG7
-                        if input_array[1] in lines[line_number + 3].strip():
-                            match = re.search(r'v="(-?\d+)"', lines[line_number + 5].strip())
+                        if input_array[1] in lines[line_number + 3].strip():  # X, Y or Z
+                            match = re.search(r'v=\"(.*?)\"', lines[line_number + 5].strip())
                             if match:
-                                value = int(match.group(1))
+                                value = float(match.group(1))
                                 print("Extracted value: ", value, " -> ", str(input_array[2]), " -> ", line_number + 5 + 1)
                                 new_text = lines[line_number + 5].replace(str(value), str(input_array[2]))
                                 lines[line_number + 5] = new_text
+                                #file.write(new_text)  # Write the modified line back to the file
+                            else:
+                                print("No value found in the given text.")
+                if "\"" + input_array[3] + "\"" in lines[line_number + 7].strip() and "\"" + input_array[3] + "\"" == "\"Moment\"": # Force or Moment
+                    if "\"" + input_array[0] + "\"" in lines[line_number + 3].strip():  # for example BG7
+                        if input_array[1] in lines[line_number + 6].strip():  # Mx, My or Mz
+                            match = re.search(r'v=\"(.*?)\"', lines[line_number + 8].strip())
+                            if match:
+                                value = float(match.group(1))
+                                print("Extracted value: ", value, " -> ", str(input_array[2]), " -> ", line_number + 8 + 1)
+                                new_text = lines[line_number + 8].replace(str(value), str(input_array[2]))
+                                lines[line_number + 8] = new_text
                                 #file.write(new_text)  # Write the modified line back to the file
                             else:
                                 print("No value found in the given text.")
@@ -147,6 +160,7 @@ def replace_text(input_array):
 
 # Example usage:
 for row in matrix:
+    print('Processing ', row)
     input_array = row
     output_array = replace_text(input_array)
     print("Extracted elements:", output_array)  # Output: ['a', 'd', 'f']
