@@ -81,28 +81,34 @@ print("Line 20:", line_number_20)
 with open('data_2.txt', 'r') as file:
     # Read all lines into a list
     lines_f2 = file.readlines()
-print(lines_f2[0])
+print(lines_f2)
+matrix = []
+for line_f2 in lines_f2:
+    parts = line_f2.strip().split(';')  # strip to remove leading/trailing whitespaces and split by ';'
+    print(parts)
+    matrix.append(parts)
+
+# Print the matrix
+"""
+for row in matrix:
+    print(row)
+"""
 
 
-parts = lines_f2[2].split(";")
-parts[-1] = parts[-1].strip()
-
-print(parts)
-print('------------------------------')
-
+"""
 with open('data_3.txt', 'r+') as file:
     lines = file.readlines()
     line_number = 0
     for line in lines:
         if "\"" + node_scia + "\"" in line:
             if "Force" in lines[line_number + 4].strip():
-                if "\"" + parts[0] + "\"" in lines[line_number - 10].strip():
-                    if parts[1] in lines[line_number + 3].strip():
+                if "\"" + matrix[-1][0] + "\"" in lines[line_number - 10].strip():
+                    if matrix[-1][1] in lines[line_number + 3].strip():
                         match = re.search(r'v="(-?\d+)"', lines[line_number + 5].strip())
                         if match:
                             value = int(match.group(1))
                             print("Extracted value: ", value, " -> ", line_number + 5 + 1)
-                            new_text = lines[line_number + 5].replace(str(value), str(parts[2]))
+                            new_text = lines[line_number + 5].replace(str(value), str(matrix[-1][2]))
                             print(new_text)
                             lines[line_number + 5] = new_text
                             #file.write(new_text)  # Write the modified line back to the file
@@ -112,8 +118,47 @@ with open('data_3.txt', 'r+') as file:
                         print(lines[line_number + 5])
         line_number += 1
     pass
+"""
 
+def replace_text(input_array):
+    with open('data_3.txt', 'r+') as file:
+        lines = file.readlines()
+        line_number = 0
+        for line in lines:
+            if "\"" + node_scia + "\"" in line:
+                if "Force" in lines[line_number + 4].strip():
+                    if "\"" + input_array[0] + "\"" in lines[line_number - 10].strip():  # for example BG7
+                        if input_array[1] in lines[line_number + 3].strip():
+                            match = re.search(r'v="(-?\d+)"', lines[line_number + 5].strip())
+                            if match:
+                                value = int(match.group(1))
+                                print("Extracted value: ", value, " -> ", str(input_array[2]), " -> ", line_number + 5 + 1)
+                                new_text = lines[line_number + 5].replace(str(value), str(input_array[2]))
+                                lines[line_number + 5] = new_text
+                                #file.write(new_text)  # Write the modified line back to the file
+                            else:
+                                print("No value found in the given text.")
+            line_number += 1
+        pass
+    with open("data_3.txt", "w") as file:
+        for line in lines:
+            file.write(line)
+    return new_text
 
+# Example usage:
+for row in matrix:
+    input_array = row
+    output_array = replace_text(input_array)
+    print("Extracted elements:", output_array)  # Output: ['a', 'd', 'f']
+
+"""
+input_array = matrix[5]
+output_array = replace_text(input_array)
+print("Extracted elements:", output_array)  # Output: ['a', 'd', 'f']
+"""
+
+"""
 with open("data_3.txt", "w") as file:
     for line in lines:
         file.write(line)
+"""
