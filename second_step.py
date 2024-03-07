@@ -2,7 +2,6 @@ import re
 
 node_scia = 'N685'
 
-
 # Open the file data_2.txt
 file_name = "data_2.txt"
 
@@ -85,35 +84,36 @@ with open('data_2.txt', 'r') as file:
 print(lines_f2[0])
 
 
-parts = lines_f2[0].split(";")
+parts = lines_f2[2].split(";")
 parts[-1] = parts[-1].strip()
 
 print(parts)
+print('------------------------------')
 
-line_number = 0
-for line in lines:
-    if "\""+node_scia+"\"" in line:
-        #print(line_number)  # Return line number on first match
-        if "Force" in lines[line_number+4].strip():
-            if "\"" + parts[0] + "\"" in lines[line_number-10].strip():
-                if parts[1] in lines[line_number+3].strip():
-                    #print(f"Value containing 'BG7' found on line: {line_number}")
-                    #print(lines[line_number].strip())
-                    #print('Force')
-                    #print('X')
-                    #print('Value to replace: '+ lines[line_number+5].strip())
-                    match = re.search(r'v="(-?\d+)"', lines[line_number+5].strip())
-                    if match:
-                        value = int(match.group(1))
-                        print("Extracted value: ", value, " -> ", line_number+5+1)
-                        # Replace the value with the third element of parts
-                        new_text = lines[line_number+5].replace(str(value), str(parts[2]))
-                        #content = lines[line_number+5].replace('<p5 v="149600"/>', '<p5 v="{}"/>'.format(parts[2]))
-                        print(new_text)
-                        file.write(line)
-                    else:
-                        print("No value found in the given text.")
-                    print(lines[line_number+5])
-    line_number += 1
+with open('data_3.txt', 'r+') as file:
+    lines = file.readlines()
+    line_number = 0
+    for line in lines:
+        if "\"" + node_scia + "\"" in line:
+            if "Force" in lines[line_number + 4].strip():
+                if "\"" + parts[0] + "\"" in lines[line_number - 10].strip():
+                    if parts[1] in lines[line_number + 3].strip():
+                        match = re.search(r'v="(-?\d+)"', lines[line_number + 5].strip())
+                        if match:
+                            value = int(match.group(1))
+                            print("Extracted value: ", value, " -> ", line_number + 5 + 1)
+                            new_text = lines[line_number + 5].replace(str(value), str(parts[2]))
+                            print(new_text)
+                            lines[line_number + 5] = new_text
+                            #file.write(new_text)  # Write the modified line back to the file
+                            print('done')
+                        else:
+                            print("No value found in the given text.")
+                        print(lines[line_number + 5])
+        line_number += 1
+    pass
 
 
+with open("data_3.txt", "w") as file:
+    for line in lines:
+        file.write(line)
