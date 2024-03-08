@@ -8,11 +8,11 @@ node_scia = 'N685'
 first_file_txt = 'data.txt'
 
 with open(first_file_txt, "r") as file:
-    # Legge ogni riga nel file
+    # Read every line in the file
     for line_number, line in enumerate(file, start=1):
-        # Controlla se la riga contiene "<obj id="
+        # Check if the line contains "<p2 v="
         if "<p2 v=\""+node_scia+"\"/>" in line:
-            # Aggiunge il numero della riga all'array
+            # Add the number of the line into the array
             num_lines.append(line_number)
             #print({line[-2]})
             a = linecache.getline(first_file_txt, line_number-10)
@@ -41,14 +41,12 @@ with open(first_file_txt, "r") as file:
             my_array.append(values)
 
 
-
-
 with open(first_file_txt, "r") as file:
-    # Legge ogni riga nel file
+    # Read every line in the file
     for line_number, line in enumerate(file, start=1):
-        # Controlla se la riga contiene "<obj id="
+        # Check if the line contains "<p3 v=" 
         if "<p3 v=\""+node_scia+"\"/>" in line:
-            # Aggiunge il numero della riga all'array
+            # Add the line number into the array
             num_lines.append(line_number)
             #print({line[-2]})
             a = linecache.getline(first_file_txt, line_number+3)
