@@ -1,7 +1,7 @@
 ## XML - SCIA Engineer
 
 ## Context
-Immagina di avere un modello SCIA delle fondazioni di un ponte. L'ingegnere che ha calcolato la struttura ti fornisce le reazioni da inserire per calcolare le fondazioni ma dopo una settimana i carichi sono cambiati e bisogna rifare tutto. Questo script permette di aggiornare i carichi sulle fondazioni automatiamente.
+Imagine you have a SCIA Engineer model of a bridge foundation. The engineer who calculated the structure gives you the reactions to calculate the foundations. After a week, loads have changed and everything has to be changed again. This script allows you to update the loads on the foundations automatically.
 
 ## First thing
 - Create a copy of the SCIA model
