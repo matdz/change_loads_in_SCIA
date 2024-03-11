@@ -4,7 +4,7 @@ import csv
 num_lines = []
 my_array = []
 file_csv = 'output.csv'
-node_scia = 'N685'
+node_scia = 'N216'
 first_file_txt = 'data.txt'
 
 with open(first_file_txt, "r") as file:

@@ -1,6 +1,6 @@
 import re
 
-node_scia = 'N685'
+node_scia = 'N216'
 
 # Assign a variable to the files name
 file_name = "data_2.txt"
